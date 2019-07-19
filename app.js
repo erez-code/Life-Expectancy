@@ -1,28 +1,24 @@
-window.addEventListener("load", startup, false);
+var goButton = document.getElementById("calculate1");
 
-var displayResault = document.getElementById("displayResault1");
+goButton.addEventListener("click", function() {
+  var selected_age = document.getElementById("ageForCalc1").value;
+  var displayResault = document.getElementById("displayResault1");
 
-function startup() {
-  $("#calculate1").click(function(event) {
-    //check if there's enough input
-    var selected_age = document.getElementById("ageForCalc1").value;
+  if (selected_age === "") {
+    displayResault.innerHTML = "Not enough input.";
+  } else if (selected_age > 82 || selected_age < 0) {
+    displayResault.innerHTML = "Insert any age between 0 and 82.";
+  } else {
+    //calculate
+    var isMale = document.getElementById("genderChoice")[0].checked;
+    var calcResault = calcLifeExpectancyLeft(selected_age, isMale);
 
-    if (selected_age === "") {
-      displayResault.innerHTML = "Not enough input.";
-    } else if (selected_age > 82 || selected_age < 0) {
-      displayResault.innerHTML = "Insert any age between 0 and 82.";
-    } else {
-      //calculate
-      var isMale = document.getElementById("genderChoice")[0].checked;
-      var calcResault = calcLifeExpectancyLeft(selected_age, isMale);
-
-      displayResault.innerHTML =
-        "At your age, the remainder of your life expectancy is " +
-        calcResault.toFixed(2) +
-        " years.";
-    }
-  });
-}
+    displayResault.innerHTML =
+      "At your age, the remainder of your life expectancy is " +
+      calcResault.toFixed(2) +
+      " years.";
+  }
+});
 
 var life_expectancy_female_lut = [
   84.2,
